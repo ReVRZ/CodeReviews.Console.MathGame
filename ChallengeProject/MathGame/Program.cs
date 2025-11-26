@@ -21,7 +21,7 @@ void Menu()
 
     ChallengeValue = Convert.ToInt32(Console.ReadLine());
 }
-void getChallengeData(int choice)
+void GetChallengeData(int choice)
 {
     switch (choice)
     {
@@ -42,7 +42,7 @@ void getChallengeData(int choice)
             rerun = false;
             return;
         case 6:
-            displayHistory();
+            DisplayHistory();
             rerun = true;
             return;
         default:
@@ -50,7 +50,7 @@ void getChallengeData(int choice)
             break;
     }
 }
-void challenge()
+void Challenge()
 {
     string question = string.Empty;
     if (ChallengeValue < 5 && ChallengeValue > 0)
@@ -105,10 +105,10 @@ void challenge()
                 Console.WriteLine("Invalid input. Please enter a valid integer.");
             }
         }
-        checkAnswer(question);
+        CheckAnswer(question);
     }
 }
-void checkAnswer(string question)
+void CheckAnswer(string question)
 {
     if (userAnswer == correctAnswers)
     {
@@ -120,7 +120,7 @@ void checkAnswer(string question)
         Console.WriteLine($"Incorrect. The correct answer is {correctAnswers}.\n");
     }
 }
-void displayHistory()
+void DisplayHistory()
 {
     Console.WriteLine("Answer History: \n");
     foreach (var entry in answerHistory)
@@ -131,10 +131,10 @@ void displayHistory()
 while (rerun)
 {
     Menu();
-    getChallengeData(ChallengeValue);
+    GetChallengeData(ChallengeValue);
     
     if (ChallengeValue >= 1 && ChallengeValue <= 4)
     {
-        challenge();
+        Challenge();
     }
 }
