@@ -1,13 +1,16 @@
 ﻿using System.Transactions;
 
+Random rnd = new Random();
 int ChallengeValue = new int();
 string value = string.Empty;
 int correctAnswers = 0;
 int number1 = 0;
 int number2 = 0;
 int userAnswer = 0;
+int score = 0;
 bool rerun = true;
 List<string> answerHistory = new List<string>();
+
 void Menu()
 {
     Console.WriteLine("Welcome to the Math Game!\n");
@@ -57,8 +60,10 @@ void Challenge()
     {
         Console.WriteLine($"You have selected {value} challenge.");
         string operationSymbol = string.Empty;
-        number1 = new Random().Next(1, 101);
-        number2 = new Random().Next(1, 101);
+        for (int i = 0; i < 5; i++)
+        {
+        number1 = rnd.Next(1, 101);
+        number2 = rnd.Next(1, 101);
         switch (ChallengeValue)
         {
             case 1:
@@ -91,8 +96,8 @@ void Challenge()
                 Console.WriteLine("Invalid choice. Please select a valid option.\n");
                 break;
         }
-        Console.WriteLine($"What is {number1} {operationSymbol} {number2} ?");
-        question += $"{number1} {operationSymbol} {number2} =";
+        Console.WriteLine($"{i + 1}. What is {number1} {operationSymbol} {number2} ?");
+        question = $"{number1} {operationSymbol} {number2} =";
         while (true)
         {
             try
@@ -106,6 +111,7 @@ void Challenge()
             }
         }
         CheckAnswer(question);
+        }
     }
 }
 void CheckAnswer(string question)
@@ -113,19 +119,32 @@ void CheckAnswer(string question)
     if (userAnswer == correctAnswers)
     {
         Console.WriteLine("Correct!\n");
-        answerHistory.Add($"{question} {userAnswer}\n");
+        score++;
+        
+        answerHistory.Add($"{question}, userAnswer {userAnswer} ✓\n");
     }
     else
     {
         Console.WriteLine($"Incorrect. The correct answer is {correctAnswers}.\n");
+        answerHistory.Add($"{question}, userAnswer {userAnswer} (Correct: {correctAnswers})\n");
     }
 }
 void DisplayHistory()
 {
-    Console.WriteLine("Answer History: \n");
-    foreach (var entry in answerHistory)
+    if(answerHistory.Count == 0)
     {
-        Console.WriteLine(entry,"\n");
+        Console.WriteLine("No history available.\n");
+        Console.WriteLine($"Your score: {score}\n");
+        return;
+    }
+    else
+    {
+        Console.WriteLine("Answer History: \n");
+        foreach (var entry in answerHistory)
+        {
+            Console.WriteLine(entry,"\n");
+        }
+        Console.WriteLine($"Your score: {score}\n");
     }
 }
 while (rerun)
